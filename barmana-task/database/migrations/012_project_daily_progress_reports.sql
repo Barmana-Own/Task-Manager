@@ -1,0 +1,30 @@
+SET NAMES utf8mb4;
+
+CREATE TABLE IF NOT EXISTS project_daily_progress_reports (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  project_id BIGINT UNSIGNED NOT NULL,
+  report_date DATE NOT NULL,
+  planned_progress DECIMAL(6,2) NOT NULL DEFAULT 0,
+  actual_progress DECIMAL(6,2) NOT NULL DEFAULT 0,
+  variance_progress DECIMAL(7,2) NOT NULL DEFAULT 0,
+  total_tasks INT UNSIGNED NOT NULL DEFAULT 0,
+  done_tasks INT UNSIGNED NOT NULL DEFAULT 0,
+  in_progress_tasks INT UNSIGNED NOT NULL DEFAULT 0,
+  overdue_tasks INT UNSIGNED NOT NULL DEFAULT 0,
+  delay_days INT UNSIGNED NOT NULL DEFAULT 0,
+  tracked_seconds BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  loss_amount DECIMAL(18,2) NULL,
+  loss_unit VARCHAR(20) NOT NULL DEFAULT 'تومان',
+  loss_note TEXT NULL,
+  delay_note TEXT NULL,
+  manager_note TEXT NULL,
+  generated_text LONGTEXT NULL,
+  created_by BIGINT UNSIGNED NULL,
+  generated_at DATETIME NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_project_daily_progress_project FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
+  CONSTRAINT fk_project_daily_progress_creator FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL,
+  UNIQUE KEY uq_project_daily_progress (project_id, report_date),
+  INDEX idx_project_daily_progress_date (report_date, project_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -1,0 +1,32 @@
+# Dependencies / build output
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+coverage/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Runtime / server generated files
+*.log
+logs/
+backups/
+daily-project-reports/
+*.pid
+*.ini
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup-*
